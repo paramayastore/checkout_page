@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Proyektor LCD</title>
+    <link rel="stylesheet" href="css/styles.css"> <!-- Menghubungkan CSS terpisah -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery untuk slide gambar -->
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <h1>Checkout Proyektor LCD</h1>
+        </header>
+
+        <!-- Photo Section -->
+        <section class="photo-section">
+            <div class="photo-row"> <!-- Pembungkus untuk dua foto -->
+                <div class="photo-left">
+                    <img src="images/photo1.png" alt="Foto Kiri" />
+                </div>
+                <div class="photo-right">
+                    <img src="images/photo2.png" alt="Foto Kanan" />
+                </div>
+            </div>
+            <div class="photo-full">
+                <div class="carousel">
+                    <img src="images/promo.jpg" alt="Slide 1" class="active" />
+                    <img src="images/subheader1.webp" alt="Slide 2" />
+                    <img src="images/header_2.webp" alt="Slide 3" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Product List Section -->
+        <section class="product-list">
+            <h2>Termasuk Dalam Paket:</h2>
+            <ul>
+                <li>&#10004; Mini Proyektor</li>
+                <li>&#10004; Remote</li>
+                <li>&#10004; Charger</li>
+                <li>&#10004; Av Cable</li>
+            </ul>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits">
+            <h2>Keuntungan:</h2>
+            <ul>
+                <li>😊 Bisa bayar dirumah ( COD )</li>
+                <li>🎁 Biaya packing gratis & bubblewrap</li>
+                <li>🔒 Jaminan barang aman & kualitas terjamin</li>
+                <li>💸 Potongan ongkir 50.000</li>
+            </ul>
+        </section>
+
+        <!-- Form Data Penerima -->
+        <section class="recipient-data">
+            <h2>Data Penerima:</h2>
+            <form id="checkout-form">
+                <label for="name">Nama:</label>
+                <input type="text" id="name" name="name" pattern="[A-Za-z\s]+" title="Hanya huruf yang diperbolehkan" required />
+
+                <label for="whatsapp">Nomor WhatsApp:</label>
+                <input type="tel" id="whatsapp" name="whatsapp" pattern="[0-9-]+" title="Hanya angka yang diperbolehkan" required />
+
+                <button type="button" class="btn-pesan" id="buy-now">Beli Sekarang</button>
+            </form>
+        </section>
+
+        <!-- Footer Section -->
+        <footer>
+            <p>&phone; Kontak Pemesanan</p>
+            <p>atau klik link whatsapp dibawah</p>
+            <a href="https://wa.me/6285755771622" target="_blank">https://wa.me/6285755771622</a>
+        </footer>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            let currentIndex = 0;
+            const slides = $('.carousel img');
+            const totalSlides = slides.length;
+
+            function showSlide(index) {
+                slides.removeClass('active').eq(index).addClass('active');
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                showSlide(currentIndex);
+            }
+
+            setInterval(nextSlide, 2000); // Ganti slide setiap 2 detik
+
+            // Fungsi untuk format nomor WhatsApp
+            $('#whatsapp').on('input', function() {
+                let value = $(this).val().replace(/[^0-9]/g, ''); // Menghapus karakter non-angka
+                if (value.length > 12) {
+                    value = value.substring(0, 12); // Batasi sampai 12 angka
+                }
+                const formattedValue = value.replace(/(\d{4})(\d{0,4})(\d{0,4})/, '$1-$2-$3').replace(/-$/, ''); // Menambahkan "-"
+                $(this).val(formattedValue);
+            });
+
+            $('#buy-now').click(function() {
+                const name = $('#name').val();
+                const whatsapp = $('#whatsapp').val().replace(/-/g, ''); // Menghapus tanda "-" sebelum pengiriman
+                const productName = 'Mini Proyektor';
+
+                // Validasi input
+                const namePattern = /^[A-Za-z\s]+$/;
+                const whatsappPattern = /^[0-9]+$/;
+
+                if (!namePattern.test(name)) {
+                    alert('Nama hanya boleh terdiri dari huruf.');
+                    return;
+                }
+
+                if (!whatsappPattern.test(whatsapp)) {
+                    alert('Nomor WhatsApp hanya boleh terdiri dari angka.');
+                    return;
+                }
+
+                const telegramMessage = `📦 Pesanan Baru\n\nNama: ${name}\nNomor WhatsApp: ${whatsapp}\nProduk: ${productName}`;
+
+                // Kirim data ke Telegram
+                const telegramToken = '7586115719:AAExAwAb2zhE_TNm1fQP53oVaJGtcgt7WvE'; // Token bot Telegram
+                const chatId = '6381109580'; // ID Chat Telegram
+                const telegramUrl = `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(telegramMessage)}`;
+
+                fetch(telegramUrl)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Pesan berhasil dikirim ke Telegram:', data);
+                        const whatsappMessage = `Saya ingin memesan ${productName}. Nama: ${name}, Kontak: ${whatsapp}`;
+                        const whatsappUrl = `https://wa.me/6285755771622?text=${encodeURIComponent(whatsappMessage)}`;
+                        window.open(whatsappUrl, '_blank'); // Arahkan ke WhatsApp
+                    })
+                    .catch(error => {
+                        console.error('Terjadi kesalahan:', error);
+                    });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+header {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 20px 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 1.8em;
+}
+
+.photo-section {
+    display: flex;
+    flex-direction: column; /* Pastikan untuk menjaga elemen di bawah satu sama lain */
+    align-items: center;
+}
+
+.photo-row {
+    display: flex; /* Menjadikan elemen di dalam baris ini sejajar */
+    justify-content: space-between; /* Memberikan spasi antara foto kiri dan kanan */
+    width: 100%; /* Mengisi lebar kontainer */
+    max-width: 600px; /* Membatasi lebar maksimum */
+    margin-bottom: 20px; /* Jarak di bawah baris foto */
+}
+
+.photo-left img, .photo-right img {
+    width: 182px; /* Ukuran foto */
+    height: 62px;
+    border-radius: 0px; /* Sudut kotak tanpa pembulatan */
+}
+
+.photo-full {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Lebar maksimum untuk foto carousel */
+}
+
+.photo-full .carousel img {
+    width: 100%;
+    display: none; /* Sembunyikan semua gambar */
+}
+
+.photo-full .carousel img.active {
+    display: block; /* Tampilkan gambar aktif */
+}
+
+.description, .recipient-data {
+    margin: 20px 0;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.recipient-data form {
+    display: flex;
+    flex-direction: column;
+}
+
+.recipient-data label {
+    margin-bottom: 5px;
+}
+
+.recipient-data input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn-pesan {
+    display: inline-block;
+    background-color: #28a745; /* Warna latar belakang tombol */
+    color: white;
+    padding: 15px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.5em; /* Ukuran teks lebih besar */
+    width: 100%;
+    text-align: center;
+    border: none; /* Menghilangkan border */
+    cursor: pointer; /* Pointer saat hover */
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.8em;
+}
+
+footer a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.product-list, .benefits {
+    background-color: #fff; /* Latar belakang putih untuk kontras */
+    padding: 15px; /* Padding di sekitar teks */
+    border-radius: 5px; /* Sudut membulat */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+    margin-bottom: 20px; /* Spasi di bawah setiap section */
+}
+
+.product-list ul, .benefits ul {
+    list-style: none; /* Menghapus bullet points default */
+    padding-left: 0; /* Menghapus padding kiri */
+}
+
+.product-list li, .benefits li {
+    font-size: 1em; /* Ukuran font */
+    margin-bottom: 10px; /* Jarak antar item */
+}
